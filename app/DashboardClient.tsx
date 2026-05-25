@@ -85,6 +85,17 @@ function ensurePercentage(value: string) {
   return normalized.endsWith("%") ? normalized : `${normalized}%`;
 }
 
+function resolveAvatarFile(fileName: string, nombre: string) {
+  const normalized = fileName?.trim();
+  if (!normalized) {
+    return `${nombre.replace(/\s+/g, "")}.png`;
+  }
+  if (/matamoros/i.test(normalized) && !/matamoroso/i.test(normalized)) {
+    return "GustavoMatamoroso.png";
+  }
+  return normalized;
+}
+
 export default function DashboardClient() {
   const [candidatos, setCandidatos] = useState<Candidate[]>([]);
   const [dashboardMetrics, setDashboardMetrics] = useState<Metric[]>([]);
@@ -107,7 +118,7 @@ export default function DashboardClient() {
             nombre: row.nombre,
             porcentaje: Number(row.porcentaje) || 0,
             votos: formatVotes(row.votos),
-            foto: row.foto,
+            foto: resolveAvatarFile(row.foto, row.nombre),
             color: row.color || "#1f2937",
             formula: "",
           }))
@@ -118,12 +129,12 @@ export default function DashboardClient() {
 
         const metrics: Metric[] = [
           { label: "Participación", value: ensurePercentage(dashboardMap.get("participacion") ?? ""), description: "Electores movilizados" },
-          { label: "Mesas informadas", value: ensurePercentage(dashboardMap.get("mesas_informadas") ?? ""), description: "Avance del conteo" },
+          { label: "Mesas informadas", value: formatVotes(dashboardMap.get("mesas_informadas") ?? ""), description: "Mesas informadas" },
           { label: "Abstención", value: ensurePercentage(dashboardMap.get("abstencion") ?? ""), description: "Padrón no votante" },
         ];
 
         const blank = resultados.find((c) => c.nombre.toLowerCase().includes("blanco"));
-        if (blank) metrics.splice(2, 0, { label: "Voto en blanco", value: blank.votos, description: "Opciones nulas o blancas" });
+        if (blank) metrics.splice(2, 0, { label: "Voto en blanco", value: blank.votos, description: "Votos en blanco" });
 
         if (mounted) {
           setCandidatos(resultados);
@@ -156,7 +167,7 @@ export default function DashboardClient() {
               <p className="max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">Cobertura especial de Contexto.info para Elecciones Colombia 2026</p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white px-5 py-4 text-right shadow-sm">
-              <p className="text-[11px] uppercase tracking-[0.35em] text-slate-500">Actualizado</p>
+              <p className="text-[11px] uppercase tracking-[0.35em] text-slate-500">ÚLTIMA ACTUALIZACIÓN</p>
               <p className="mt-2 text-lg font-semibold text-slate-900">{updatedAt}</p>
             </div>
           </div>
@@ -227,7 +238,7 @@ export default function DashboardClient() {
                           />
                         </div>
                       </div>
-                      <img src={`/avatars/${c.foto}`} alt={c.nombre} className="candidate-photo" />
+                      <img src={`/avatars/${resolveAvatarFile(c.foto, c.nombre)}`} alt={c.nombre} className="candidate-photo" />
                       <div className="result-info">
                         <p className="result-name">{c.nombre}</p>
                         <p className="muted">{c.formula ?? ""}</p>
