@@ -12,6 +12,7 @@ type Candidate = {
   nombre: string;
   porcentaje: number;
   votos: string;
+  votosNumero: number;
   foto: string;
   color: string;
   formula?: string;
@@ -71,10 +72,17 @@ function parseCSV<T extends Record<string, string>>(csv: string): T[] {
   });
 }
 
+function parseNumber(value: string) {
+  const cleaned = value.replace(/[^0-9.,-]/g, "").trim();
+  if (!cleaned) return 0;
+  const normalized = cleaned.replace(/,/g, "");
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 function formatVotes(value: string) {
-  const digits = value.replace(/[^0-9.-]/g, "");
-  const parsed = Number(digits);
-  if (!Number.isFinite(parsed)) return value.trim();
+  const parsed = parseNumber(value);
+  if (!Number.isFinite(parsed) || parsed === 0) return value.trim();
   return new Intl.NumberFormat("es-CO").format(parsed);
 }
 
@@ -113,16 +121,20 @@ export default function DashboardClient() {
         const [rText, dText] = await Promise.all([resR.text(), resD.text()]);
         const resultados = parseCSV<ResultadosRow>(rText)
           .filter((row) => row.nombre.trim().length > 0)
-          .map((row) => ({
-            id: Number(row.id) || 0,
-            nombre: row.nombre,
-            porcentaje: Number(row.porcentaje) || 0,
-            votos: formatVotes(row.votos),
-            foto: resolveAvatarFile(row.foto, row.nombre),
-            color: row.color || "#1f2937",
-            formula: "",
-          }))
-          .sort((a, b) => b.porcentaje - a.porcentaje);
+          .map((row) => {
+            const votosNumero = parseNumber(row.votos);
+            return {
+              id: Number(row.id) || 0,
+              nombre: row.nombre,
+              porcentaje: Number(row.porcentaje) || 0,
+              votos: formatVotes(row.votos),
+              votosNumero,
+              foto: resolveAvatarFile(row.foto, row.nombre),
+              color: row.color || "#1f2937",
+              formula: "",
+            };
+          })
+          .sort((a, b) => b.votosNumero - a.votosNumero || b.porcentaje - a.porcentaje);
 
         const dashboardRows = parseCSV<DashboardRow>(dText);
         const dashboardMap = new Map(dashboardRows.map((r) => [r.metrica.toLowerCase().trim(), r.valor.trim()]));
