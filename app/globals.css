@@ -85,6 +85,115 @@ h6 {
   }
 }
 
+/* Desktop / Laptop layout tweaks: avoid horizontal scroll and distribute candidates */
+@media (min-width: 1024px) {
+  .result-bar {
+    overflow-x: hidden;
+    justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .result-item {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    max-width: 1fr;
+  }
+
+  .result-item.leader {
+    flex: 1.4 1 0;
+    transform: scale(1.04);
+  }
+
+  .bar-value {
+    font-size: clamp(1.25rem, 2vw, 2.3rem);
+  }
+
+  .bar-rail {
+    height: clamp(260px, 28vh, 420px);
+  }
+}
+
+/* Laptops 1366px - slightly emphasize leader and compact spacing */
+@media (min-width: 1366px) {
+  .result-bar { gap: clamp(1rem, 1.8vw, 2rem); }
+  .result-item.leader { flex: 1.6 1 0; }
+  .candidate-photo { border-radius: 24px; }
+}
+
+/* Large desktops 1440px+ - more breathing room and larger leader */
+@media (min-width: 1440px) {
+  .result-bar { padding-left: 3rem; padding-right: 3rem; }
+  .result-item.leader { flex: 1.75 1 0; max-width: 520px; }
+  .bar-rail { height: clamp(300px, 36vh, 520px); }
+}
+
+/* Top-results block (Top 6) */
+.top-results {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.5rem);
+  align-items: end;
+  width: 100%;
+  justify-items: stretch;
+}
+
+.top-results .result-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.top-results .result-item.leader {
+  transform: scale(1.04);
+}
+
+@media (max-width: 1280px) {
+  .top-results {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .top-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .top-results {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .top-results .result-item {
+    min-width: 220px;
+    flex: 0 0 auto;
+  }
+}
+
+/* Secondary list/table */
+.all-results { width: 100%; }
+.all-results-grid { display: flex; flex-direction: column; gap: 0.6rem; }
+.all-results-row { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 0.6rem; border-bottom: 1px solid rgba(15,23,42,0.04); }
+.all-results-row .row-left { display: flex; align-items: center; }
+.all-results-row .row-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; min-width: 160px; max-width: 360px; }
+.small-bar-rail { background: rgba(15,23,42,0.06); height: 8px; width: 140px; border-radius: 999px; overflow: hidden; }
+.small-bar-fill { height: 100%; border-radius: 999px; }
+
+@media (max-width: 768px) {
+  .all-results-row { padding: 0.6rem; }
+  .small-bar-rail { width: 100%; }
+}
+
 /* Editorial utilities */
 .soft-card {
   background: var(--surface);
@@ -122,13 +231,13 @@ h6 {
   display: flex;
   flex-wrap: nowrap;
   align-items: flex-end;
-  gap: 2.5rem;
+  gap: clamp(0.75rem, 2.2vw, 2.5rem);
   padding: 2rem 1.25rem 1.75rem;
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
-  width: calc(100% + 2.5rem);
-  margin-left: -1.25rem;
+  width: 100%;
+  margin: 0;
   justify-content: flex-start;
 }
 
@@ -150,31 +259,32 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.9rem;
-  min-width: 280px;
-  width: 280px;
+  gap: clamp(0.875rem, 1.8vw, 1.9rem);
+  min-width: 200px;
+  width: 220px;
   scroll-snap-align: start;
+  flex: 0 0 auto;
 }
 
 .result-item.leader {
-  min-width: 360px;
-  width: 360px;
-  transform: scale(1.05);
+  min-width: 260px;
+  width: 300px;
+  transform: scale(1.04);
   z-index: 2;
   box-shadow: 0 32px 80px rgba(15, 23, 42, 0.16);
 }
 
 .candidate-photo {
-  width: 180px;
-  height: 210px;
-  border-radius: 28px;
+  width: clamp(96px, 12.5vw, 180px);
+  height: clamp(110px, 13.8vw, 210px);
+  border-radius: 20px;
   object-fit: cover;
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
 }
 
 .result-item.leader .candidate-photo {
-  width: 220px;
-  height: 255px;
+  width: clamp(140px, 15.5vw, 220px);
+  height: clamp(160px, 18vw, 255px);
 }
 
 .result-info {
@@ -232,8 +342,8 @@ h6 {
 
 .bar-rail {
   background: rgba(15, 23, 42, 0.08);
-  width: 96px;
-  height: 420px;
+  width: clamp(64px, 6.5vw, 96px);
+  height: clamp(220px, 32vh, 420px);
   border-radius: 999px;
   overflow: hidden;
   display: flex;
