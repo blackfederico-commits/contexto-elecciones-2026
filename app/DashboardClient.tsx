@@ -265,13 +265,13 @@ export default function DashboardClient() {
                     <div key={c.id} className="all-results-row" role="row">
                       <div className="row-left">
                         <img src={`/avatars/${c.foto}`} alt={c.nombre} className="avatar" />
-                        <div className="ml-4">
-                          <div className="font-semibold">{c.nombre}</div>
-                          <div className="text-xs muted">{c.votos} votos</div>
+                        <div className="ml-4 min-w-0">
+                          <p className="candidate-name-mobile text-slate-950 font-semibold leading-tight truncate">{c.nombre}</p>
+                          <p className="text-xs text-slate-500 mt-1">{c.votos} votos</p>
                         </div>
                       </div>
                       <div className="row-right">
-                        <div className="text-right font-semibold">{c.porcentaje}%</div>
+                        <p className="percentage-label text-slate-950 font-semibold">{c.porcentaje}%</p>
                         <div className="small-bar-rail">
                           <div className="small-bar-fill" style={{ width: `${Math.min(100, c.porcentaje)}%`, background: c.color }} />
                         </div>

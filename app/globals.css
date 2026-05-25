@@ -185,57 +185,82 @@ h6 {
 
 /* Secondary list/table */
 .all-results { width: 100%; }
-.all-results-grid { display: flex; flex-direction: column; gap: 0.6rem; }
-.all-results-row { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 0.6rem; border-bottom: 1px solid rgba(15,23,42,0.04); }
-.all-results-row .row-left { display: flex; align-items: center; }
-.all-results-row .row-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; min-width: 160px; max-width: 360px; }
-.small-bar-rail { background: rgba(15,23,42,0.06); height: 8px; width: 140px; border-radius: 999px; overflow: hidden; }
-.small-bar-fill { height: 100%; border-radius: 999px; }
+.all-results-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+.all-results-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-radius: 22px;
+  border: 1px solid rgba(15,23,42,0.06);
+  background: rgba(255,255,255,0.95);
+  gap: 1rem;
+}
+.all-results-row + .all-results-row {
+  margin-top: 0.4rem;
+}
+.all-results-row .row-left { display: flex; align-items: center; gap: 0.9rem; min-width: 0; }
+.all-results-row .row-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; min-width: 120px; max-width: 240px; }
+.small-bar-rail { background: rgba(15,23,42,0.08); height: 10px; width: 100%; border-radius: 999px; overflow: hidden; }
+.small-bar-fill { height: 100%; border-radius: 999px; transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
 
 @media (max-width: 768px) {
-  .top-results {
-    display: none;
-  }
-
   .all-results-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.75rem 1rem;
-    align-items: center;
-    padding: 0.85rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 1rem;
+    gap: 0.85rem;
   }
 
   .all-results-row .row-left {
     width: 100%;
-    min-width: 0;
+    gap: 0.85rem;
   }
 
-  .all-results-row .row-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.35rem;
-    min-width: 0;
+  .all-results-row .row-left .avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    flex-shrink: 0;
+  }
+
+  .all-results-row .row-left .candidate-name-mobile {
+    color: #111827;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .all-results-row .row-left .text-xs {
+    margin: 0.35rem 0 0;
+  }
+
+  .row-right {
+    align-items: flex-start;
     width: 100%;
-    max-width: none;
   }
 
-  .all-results-row .row-right .small-bar-rail {
+  .percentage-label {
+    color: #111827;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+  }
+
+  .row-right .small-bar-rail {
     width: 100%;
+    height: 10px;
   }
 
-  .avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
+  .all-results-row {
+    border-color: rgba(15,23,42,0.08);
+    box-shadow: 0 12px 30px rgba(15,23,42,0.06);
+    background: #ffffff;
   }
 
-  .result-name {
-    font-size: 0.98rem;
-  }
-
-  .small-bar-rail {
-    width: 100%;
+  .all-results-grid {
+    gap: 0.85rem;
   }
 }
 
