@@ -170,15 +170,16 @@ h6 {
 
 @media (max-width: 768px) {
   .top-results {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    -webkit-overflow-scrolling: touch;
+    display: none !important;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 
   .top-results .result-item {
-    min-width: 220px;
+    min-width: 0;
     flex: 0 0 auto;
   }
 }
