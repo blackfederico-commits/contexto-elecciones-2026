@@ -556,7 +556,7 @@ h6 {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  min-height: 120px;
+  min-height: clamp(340px, 44vh, 620px);
   width: 100%;
   position: relative;
   text-align: center;
@@ -751,8 +751,7 @@ h6 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 380px;
-  max-height: 420px;
+  min-height: clamp(520px, 60vh, 760px);
   position: relative;
   overflow: hidden;
 }
@@ -763,6 +762,10 @@ h6 {
     height: 140px;
     border-radius: 24px;
     border: 2px solid rgba(15, 23, 42, 0.1);
+  }
+
+  .comparison-card {
+    min-height: clamp(420px, 52vh, 620px);
   }
 }
 
