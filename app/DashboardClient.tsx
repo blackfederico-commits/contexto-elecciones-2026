@@ -193,7 +193,7 @@ export default function DashboardClient() {
       }, {} as Record<number, number>);
       setAnimatedVotes(initialCounts);
 
-      const duration = 1100;
+      const duration = 1350;
       const start = performance.now();
 
       const step = (timestamp: number) => {
@@ -300,13 +300,27 @@ export default function DashboardClient() {
                               "--fill-color-dark": `${baseColor}ee`,
                             } as CSSProperties}
                           >
-                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
+                            {showInsideBar ? (
+                              <div
+                                className="vote-badge inbar"
+                                style={{
+                                  background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}cc 100%)`,
+                                  color: "white",
+                                  border: "1px solid rgba(255,255,255,0.12)",
+                                }}
+                              >
+                                <div className="vote-badge-number">{votesValue}</div>
+                                <div className="vote-badge-label">VOTOS</div>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                         {!showInsideBar ? (
                           <div className="comparison-votes-above">
-                            <div className="comparison-votes-above-number">{votesValue}</div>
-                            <div className="comparison-votes-above-label">votos</div>
+                            <div className="vote-badge">
+                              <div className="vote-badge-number">{votesValue}</div>
+                              <div className="vote-badge-label">VOTOS</div>
+                            </div>
                           </div>
                         ) : null}
                       </div>
@@ -343,13 +357,27 @@ export default function DashboardClient() {
                               "--fill-color-dark": `${baseColor}ee`,
                             } as CSSProperties}
                           >
-                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
+                            {showInsideBar ? (
+                              <div
+                                className="vote-badge inbar"
+                                style={{
+                                  background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}cc 100%)`,
+                                  color: "white",
+                                  border: "1px solid rgba(255,255,255,0.12)",
+                                }}
+                              >
+                                <div className="vote-badge-number">{votesValue}</div>
+                                <div className="vote-badge-label">VOTOS</div>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                         {!showInsideBar ? (
                           <div className="comparison-votes-above">
-                            <div className="comparison-votes-above-number">{votesValue}</div>
-                            <div className="comparison-votes-above-label">votos</div>
+                            <div className="vote-badge">
+                              <div className="vote-badge-number">{votesValue}</div>
+                              <div className="vote-badge-label">VOTOS</div>
+                            </div>
                           </div>
                         ) : null}
                       </div>
