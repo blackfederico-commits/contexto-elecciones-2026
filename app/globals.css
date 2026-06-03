@@ -481,16 +481,16 @@ h6 {
 }
 
 .comparison-card {
-  padding: 1.25rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 320px;
-  max-height: 420px;
+  min-height: 260px;
+  max-height: 360px;
 }
 
 .comparison-card.mobile {
-  min-height: 300px;
+  min-height: 260px;
 }
 
 .comparison-card-leader {
@@ -501,14 +501,33 @@ h6 {
 .comparison-card-top {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .comparison-percentage {
-  font-size: clamp(2rem, 2.3vw, 2.7rem);
-  font-weight: 800;
+  font-size: clamp(2.2rem, 2.8vw, 3rem);
+  font-weight: 900;
   line-height: 1;
   color: #111827;
+}
+
+.comparison-name {
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #111827;
+}
+
+.comparison-profile-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.comparison-body {
+  min-width: 0;
 }
 
 .comparison-bar {
@@ -519,7 +538,7 @@ h6 {
 
 .comparison-bar-track {
   width: 100%;
-  min-height: 34px;
+  min-height: 42px;
   background: rgba(15, 23, 42, 0.08);
   border-radius: 999px;
   overflow: hidden;
@@ -539,7 +558,7 @@ h6 {
 
 .comparison-bar-text {
   color: white;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
   white-space: nowrap;
@@ -551,21 +570,22 @@ h6 {
   color: #111827;
   font-weight: 700;
   font-size: 1rem;
-}
-
-.comparison-media {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 1rem;
+  margin: 0;
 }
 
 .comparison-photo {
-  width: 120px;
-  height: 120px;
-  border-radius: 24px;
+  width: 190px;
+  height: 190px;
+  border-radius: 28px;
   object-fit: cover;
   border: 2px solid rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 768px) {
+  .comparison-photo {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .comparison-metrics {

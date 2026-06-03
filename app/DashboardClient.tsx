@@ -267,35 +267,38 @@ export default function DashboardClient() {
         <section className="space-y-6 animate-fade-up">
           <div>
             <h2 className="font-serif text-3xl font-semibold text-slate-950 mb-2">Segunda vuelta presidencial</h2>
-            <p className="text-slate-600">Cobertura premium en tiempo real.</p>
           </div>
 
           <div className="comparison-grid hidden md:grid gap-6">
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
-              const insideBar = candidate.porcentaje >= 15;
+              const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
+              const scaledWidth = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+              const showInsideBar = scaledWidth >= 20;
               return (
                 <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate.nombre}</p>
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
+                    <p className="comparison-name">{candidate.nombre}</p>
                   </div>
-                  <div className="comparison-bar">
-                    <div className="comparison-bar-track">
-                      <div
-                        className="comparison-bar-fill"
-                        style={{
-                          width: barActive ? `${candidate.porcentaje}%` : "0%",
-                          background: candidate.color,
-                        }}
-                      >
-                        {insideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                  <div className="comparison-profile-row">
+                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
+                    <div className="comparison-body">
+                      <div className="comparison-bar">
+                        <div className="comparison-bar-track">
+                          <div
+                            className="comparison-bar-fill"
+                            style={{
+                              width: barActive ? `${scaledWidth}%` : "0%",
+                              background: candidate.color,
+                            }}
+                          >
+                            {showInsideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                          </div>
+                        </div>
+                        {!showInsideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
                       </div>
                     </div>
-                    {!insideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
-                  </div>
-                  <div className="comparison-media">
-                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                   </div>
                 </article>
               );
@@ -305,29 +308,33 @@ export default function DashboardClient() {
           <div className="md:hidden grid grid-cols-2 gap-4">
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
-              const insideBar = candidate.porcentaje >= 15;
+              const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
+              const scaledWidth = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+              const showInsideBar = scaledWidth >= 20;
               return (
                 <article key={candidate.id} className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate.nombre}</p>
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
+                    <p className="comparison-name">{candidate.nombre}</p>
                   </div>
-                  <div className="comparison-bar">
-                    <div className="comparison-bar-track">
-                      <div
-                        className="comparison-bar-fill"
-                        style={{
-                          width: barActive ? `${candidate.porcentaje}%` : "0%",
-                          background: candidate.color,
-                        }}
-                      >
-                        {insideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                  <div className="comparison-profile-row">
+                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
+                    <div className="comparison-body">
+                      <div className="comparison-bar">
+                        <div className="comparison-bar-track">
+                          <div
+                            className="comparison-bar-fill"
+                            style={{
+                              width: barActive ? `${scaledWidth}%` : "0%",
+                              background: candidate.color,
+                            }}
+                          >
+                            {showInsideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                          </div>
+                        </div>
+                        {!showInsideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
                       </div>
                     </div>
-                    {!insideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
-                  </div>
-                  <div className="comparison-media">
-                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                   </div>
                 </article>
               );
