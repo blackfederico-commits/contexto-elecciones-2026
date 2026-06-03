@@ -351,25 +351,18 @@ export default function DashboardClient() {
                             } as CSSProperties}
                           >
                             {showInsideBar ? (
-                              <div
-                                className="vote-badge inbar"
-                                style={{
-                                  background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}cc 100%)`,
-                                  color: "white",
-                                  border: "1px solid rgba(255,255,255,0.12)",
-                                }}
-                              >
-                                <div className="vote-badge-number">{votesValue}</div>
-                                <div className="vote-badge-label">VOTOS</div>
+                              <div className="inbar-votes">
+                                <div className="inbar-votes-number">{votesValue}</div>
+                                <div className="inbar-votes-label">VOTOS</div>
                               </div>
                             ) : null}
                           </div>
                         </div>
                         {!showInsideBar ? (
                           <div className="comparison-votes-above">
-                            <div className="vote-badge">
-                              <div className="vote-badge-number">{votesValue}</div>
-                              <div className="vote-badge-label">VOTOS</div>
+                            <div className="votes-above-text">
+                              <div className="votes-above-number">{votesValue}</div>
+                              <div className="votes-above-label">VOTOS</div>
                             </div>
                           </div>
                         ) : null}
