@@ -273,8 +273,8 @@ export default function DashboardClient() {
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
-              const scaledWidth = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
-              const showInsideBar = scaledWidth >= 20;
+              const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+              const showInsideBar = scaledHeight >= 25;
               return (
                 <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
@@ -284,19 +284,19 @@ export default function DashboardClient() {
                   <div className="comparison-profile-row">
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                     <div className="comparison-body">
-                      <div className="comparison-bar">
-                        <div className="comparison-bar-track">
+                      <div className="comparison-chart">
+                        <div className="comparison-bar-vertical">
                           <div
-                            className="comparison-bar-fill"
+                            className="comparison-bar-fill-vertical"
                             style={{
-                              width: barActive ? `${scaledWidth}%` : "0%",
+                              height: barActive ? `${scaledHeight}%` : "0%",
                               background: candidate.color,
                             }}
                           >
-                            {showInsideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
                           </div>
                         </div>
-                        {!showInsideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
+                        {!showInsideBar ? <p className="comparison-votes-above">{votesValue} votos</p> : null}
                       </div>
                     </div>
                   </div>
@@ -309,8 +309,8 @@ export default function DashboardClient() {
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
-              const scaledWidth = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
-              const showInsideBar = scaledWidth >= 20;
+              const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+              const showInsideBar = scaledHeight >= 25;
               return (
                 <article key={candidate.id} className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
@@ -320,19 +320,19 @@ export default function DashboardClient() {
                   <div className="comparison-profile-row">
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                     <div className="comparison-body">
-                      <div className="comparison-bar">
-                        <div className="comparison-bar-track">
+                      <div className="comparison-chart">
+                        <div className="comparison-bar-vertical">
                           <div
-                            className="comparison-bar-fill"
+                            className="comparison-bar-fill-vertical"
                             style={{
-                              width: barActive ? `${scaledWidth}%` : "0%",
+                              height: barActive ? `${scaledHeight}%` : "0%",
                               background: candidate.color,
                             }}
                           >
-                            {showInsideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
                           </div>
                         </div>
-                        {!showInsideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
+                        {!showInsideBar ? <p className="comparison-votes-above">{votesValue} votos</p> : null}
                       </div>
                     </div>
                   </div>
