@@ -86,6 +86,10 @@ function formatVotes(value: string) {
   return new Intl.NumberFormat("es-CO").format(parsed);
 }
 
+function formatNumber(value: number) {
+  return new Intl.NumberFormat("es-CO").format(Math.round(value));
+}
+
 function ensurePercentage(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return "";
@@ -109,6 +113,8 @@ export default function DashboardClient() {
   const [dashboardMetrics, setDashboardMetrics] = useState<Metric[]>([]);
   const [updatedAt, setUpdatedAt] = useState("");
   const [loading, setLoading] = useState(true);
+  const [barActive, setBarActive] = useState(false);
+  const [animatedVotes, setAnimatedVotes] = useState<Record<number, number>>({});
 
   useEffect(() => {
     let mounted = true;
@@ -178,12 +184,52 @@ export default function DashboardClient() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!loading && candidatos.length > 0) {
+      setBarActive(false);
+      const initialCounts = candidatos.reduce((acc, candidate) => {
+        acc[candidate.id] = 0;
+        return acc;
+      }, {} as Record<number, number>);
+      setAnimatedVotes(initialCounts);
+
+      const duration = 1100;
+      const start = performance.now();
+
+      const step = (timestamp: number) => {
+        const elapsed = Math.min(duration, timestamp - start);
+        const progress = elapsed / duration;
+        const nextCounts = candidatos.reduce((acc, candidate) => {
+          acc[candidate.id] = Math.round(candidate.votosNumero * progress);
+          return acc;
+        }, {} as Record<number, number>);
+        setAnimatedVotes(nextCounts);
+
+        if (elapsed < duration) {
+          requestAnimationFrame(step);
+        } else {
+          const finalCounts = candidatos.reduce((acc, candidate) => {
+            acc[candidate.id] = candidate.votosNumero;
+            return acc;
+          }, {} as Record<number, number>);
+          setAnimatedVotes(finalCounts);
+        }
+      };
+
+      requestAnimationFrame((timestamp) => {
+        setBarActive(true);
+        step(timestamp);
+      });
+    }
+  }, [loading, candidatos]);
+
   const leader = candidatos[0];
   const abelardo = candidatos.find((c) => /abelardo/i.test(c.nombre));
   const ivan = candidatos.find((c) => /cepeda/i.test(c.nombre));
   const votoBlanco = candidatos.find((c) => /blanco/i.test(c.nombre));
   const voteDifference = Math.abs((abelardo?.votosNumero ?? 0) - (ivan?.votosNumero ?? 0));
   const percentDifference = Math.abs((abelardo?.porcentaje ?? 0) - (ivan?.porcentaje ?? 0));
+  const contenders = [abelardo, ivan].filter((c): c is Candidate => Boolean(c));
 
   return (
     <main className="relative min-h-screen bg-gradient-to-b from-[#fafaf8] to-[#f5f3f0] px-4 py-8 sm:px-6 sm:py-12">
@@ -221,51 +267,67 @@ export default function DashboardClient() {
         <section className="space-y-6 animate-fade-up">
           <div>
             <h2 className="font-serif text-3xl font-semibold text-slate-950 mb-2">Segunda vuelta presidencial</h2>
-            <p className="text-slate-600">Comparación directa entre Abelardo de la Espriella e Iván Cepeda.</p>
+            <p className="text-slate-600">Cobertura premium en tiempo real.</p>
           </div>
 
           <div className="comparison-grid hidden md:grid gap-6">
-            {[abelardo, ivan].filter(Boolean).map((candidate) => {
-              const isLeader = candidate?.nombre === leader?.nombre;
+            {contenders.map((candidate) => {
+              const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
+              const insideBar = candidate.porcentaje >= 15;
               return (
-                <article key={candidate?.id} className={`comparison-card ${isLeader ? "comparison-card-leader" : ""}`}>
+                <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate?.nombre}</p>
-                    <p className="comparison-percentage">{candidate?.porcentaje}%</p>
+                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate.nombre}</p>
+                    <p className="comparison-percentage">{candidate.porcentaje}%</p>
+                  </div>
+                  <div className="comparison-bar">
+                    <div className="comparison-bar-track">
+                      <div
+                        className="comparison-bar-fill"
+                        style={{
+                          width: barActive ? `${candidate.porcentaje}%` : "0%",
+                          background: candidate.color,
+                        }}
+                      >
+                        {insideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                      </div>
+                    </div>
+                    {!insideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
                   </div>
                   <div className="comparison-media">
-                    <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="comparison-photo" />
-                    <div className="comparison-metrics">
-                      <p className="comparison-votes-label">Votos</p>
-                      <p className="comparison-votes-value">{candidate?.votos}</p>
-                    </div>
-                  </div>
-                  <div className="comparison-footer">
-                    <p className="text-sm text-slate-500">{isLeader ? "Líder actual" : "Contendiente"}</p>
+                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                   </div>
                 </article>
               );
             })}
           </div>
 
-          <div className="md:hidden grid gap-4">
-            {[abelardo, ivan].filter(Boolean).map((candidate) => {
-              const isLeader = candidate?.nombre === leader?.nombre;
+          <div className="md:hidden grid grid-cols-2 gap-4">
+            {contenders.map((candidate) => {
+              const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
+              const insideBar = candidate.porcentaje >= 15;
               return (
-                <article key={candidate?.id} className={`comparison-card mobile ${isLeader ? "comparison-card-leader" : ""}`}>
+                <article key={candidate.id} className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate?.nombre}</p>
-                    <p className="comparison-percentage">{candidate?.porcentaje}%</p>
+                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate.nombre}</p>
+                    <p className="comparison-percentage">{candidate.porcentaje}%</p>
+                  </div>
+                  <div className="comparison-bar">
+                    <div className="comparison-bar-track">
+                      <div
+                        className="comparison-bar-fill"
+                        style={{
+                          width: barActive ? `${candidate.porcentaje}%` : "0%",
+                          background: candidate.color,
+                        }}
+                      >
+                        {insideBar ? <span className="comparison-bar-text">{votesValue} votos</span> : null}
+                      </div>
+                    </div>
+                    {!insideBar ? <p className="comparison-bar-below">{votesValue} votos</p> : null}
                   </div>
                   <div className="comparison-media">
-                    <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="comparison-photo" />
-                    <div className="comparison-metrics">
-                      <p className="comparison-votes-label">Votos</p>
-                      <p className="comparison-votes-value">{candidate?.votos}</p>
-                    </div>
-                  </div>
-                  <div className="comparison-footer">
-                    <p className="text-sm text-slate-500">{isLeader ? "Líder actual" : "Contendiente"}</p>
+                    <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                   </div>
                 </article>
               );
@@ -291,27 +353,6 @@ export default function DashboardClient() {
               <p className="mt-3 text-4xl font-semibold text-slate-950">{votoBlanco?.porcentaje ?? 0}%</p>
               <p className="mt-2 text-sm text-slate-600">{votoBlanco?.votos ?? "0"} votos</p>
             </article>
-          </div>
-        </section>
-
-        <section className="summary-panel animate-fade-up">
-          <div className="summary-grid">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Líder actual</p>
-              <p className="mt-3 text-2xl font-semibold text-slate-950">{leader?.nombre ?? "Sin datos"}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Diferencia de votos</p>
-              <p className="mt-3 text-2xl font-semibold text-slate-950">{voteDifference.toLocaleString("es-CO")} votos</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Diferencia porcentual</p>
-              <p className="mt-3 text-2xl font-semibold text-slate-950">{percentDifference.toFixed(1)} pts</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Última actualización</p>
-              <p className="mt-3 text-2xl font-semibold text-slate-950">{updatedAt}</p>
-            </div>
           </div>
         </section>
 
