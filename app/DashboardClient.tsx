@@ -275,6 +275,7 @@ export default function DashboardClient() {
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
               const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
               const showInsideBar = scaledHeight >= 25;
+              const baseColor = candidate.color;
               return (
                 <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
@@ -290,7 +291,7 @@ export default function DashboardClient() {
                             className="comparison-bar-fill-vertical"
                             style={{
                               height: barActive ? `${scaledHeight}%` : "0%",
-                              background: candidate.color,
+                              background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}ee 100%)`,
                             }}
                           >
                             {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
@@ -311,6 +312,7 @@ export default function DashboardClient() {
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
               const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
               const showInsideBar = scaledHeight >= 25;
+              const baseColor = candidate.color;
               return (
                 <article key={candidate.id} className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
@@ -326,7 +328,7 @@ export default function DashboardClient() {
                             className="comparison-bar-fill-vertical"
                             style={{
                               height: barActive ? `${scaledHeight}%` : "0%",
-                              background: candidate.color,
+                              background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}ee 100%)`,
                             }}
                           >
                             {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
