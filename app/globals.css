@@ -485,14 +485,14 @@ h6 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 380px;
-  max-height: 420px;
+  min-height: 340px;
+  max-height: 380px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .comparison-card.mobile {
-  min-height: 320px;
+  min-height: 280px;
 }
 
 .comparison-card-leader {
@@ -563,29 +563,103 @@ h6 {
 }
 
 .comparison-bar-vertical {
-  display: none !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0.06) 100%);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .comparison-bar-fill-vertical {
-  display: none !important;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--fill-color-light, #cc0100) 0%, var(--fill-color-dark, #a50000) 100%);
+  border-radius: 8px;
+  animation: barGrow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 0.85rem;
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.28),
+    inset 0 -8px 16px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+.comparison-bar-fill-vertical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  pointer-events: none;
+}
+
+@keyframes barGrow {
+  from {
+    height: 0%;
+  }
+  to {
+    height: var(--fill-scale, 100%);
+  }
 }
 
 .comparison-bar-text-vertical {
-  display: none !important;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
 
+/* Premium votes display module */
 .comparison-votes-above {
-  position: relative;
-  top: auto;
-  left: auto;
-  transform: none;
-  color: #111827;
-  font-weight: 800;
-  font-size: 1.1rem;
-  margin: 0.75rem 0 0 0;
+  position: absolute;
+  top: -4.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.90) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  margin: 0;
   white-space: nowrap;
-  text-align: center;
   letter-spacing: -0.01em;
+  z-index: 10;
+}
+
+.comparison-votes-above-number {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #111827;
+  letter-spacing: -0.02em;
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+}
+
+.comparison-votes-above-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6b7280;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
@@ -596,66 +670,36 @@ h6 {
 
 /* Card fill visualization - dynamic background from bottom */
 .comparison-card::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0%;
-  background: linear-gradient(180deg, var(--fill-gradient-light, currentColor) 0%, var(--fill-gradient-dark, currentColor) 100%);
-  border-radius: 32px;
-  opacity: 0.92;
-  z-index: 0;
-  transition: none;
+  display: none;
 }
 
 .comparison-card[data-fill-active="true"]::before {
-  animation: fillFromBottom 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  display: none;
 }
 
 @keyframes fillFromBottom {
-  from {
-    height: 0%;
-    opacity: 0.6;
-  }
-  to {
-    height: var(--fill-height, 50%);
-    opacity: 0.92;
-  }
+  from { display: none; }
+  to { display: none; }
 }
 
 /* Inner glow and reflection on fill */
 .comparison-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 40%);
-  border-radius: 32px;
-  z-index: 1;
-  pointer-events: none;
-  transition: none;
+  display: none;
 }
 
 .comparison-card[data-fill-active="true"]::after {
-  animation: fillReflection 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  display: none;
 }
 
 @keyframes fillReflection {
-  from {
-    height: 0%;
-  }
-  to {
-    height: var(--fill-height, 50%);
-  }
+  from { display: none; }
+  to { display: none; }
 }
 
 /* Ensure all content sits above fill layer */
 .comparison-card > * {
-  position: relative;
-  z-index: 2;
+  position: static;
+  z-index: auto;
 }
 
 .comparison-card {
