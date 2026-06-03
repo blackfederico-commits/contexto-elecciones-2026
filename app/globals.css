@@ -455,10 +455,12 @@ h6 {
 .hover-lift { transition: transform .26s ease, box-shadow .26s ease; }
 .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 30px 70px -30px rgba(0,0,0,0.08); }
 
+.comparison-card,
 .stat-card,
-.bar-card,
 .mobile-card,
-.summary-panel {
+.summary-panel,
+.difference-panel,
+.blank-block {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 32px;
@@ -473,13 +475,119 @@ h6 {
   justify-content: space-between;
 }
 
-.bar-card {
-  padding: 1.25rem;
+.comparison-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.comparison-card {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
   min-height: 360px;
-  max-height: 460px;
+  max-height: 430px;
+}
+
+.comparison-card-leader {
+  border-color: rgba(204, 1, 0, 0.18);
+  box-shadow: 0 32px 90px rgba(204, 1, 0, 0.16);
+}
+
+.comparison-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comparison-percentage {
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #111827;
+}
+
+.comparison-media {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.comparison-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 24px;
+  object-fit: cover;
+  border: 2px solid rgba(15, 23, 42, 0.08);
+}
+
+.comparison-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comparison-votes-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.comparison-votes-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.comparison-footer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.comparison-footer p {
+  margin: 0;
+}
+
+.comparison-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 1.5rem;
+}
+
+.difference-panel {
+  padding: 1.5rem;
+}
+
+.difference-values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.difference-panel p {
+  margin: 0;
+}
+
+.blank-block {
+  padding: 1.5rem;
+}
+
+.blank-block p {
+  margin: 0;
+}
+
+.bar-card {
+  display: none;
+}
+
+.bar-track,
+.bar-fill.vertical,
+.bar-card-footer,
+.bar-card-header,
+.bar-fill-text {
+  display: none;
 }
 
 .bar-card-leader {

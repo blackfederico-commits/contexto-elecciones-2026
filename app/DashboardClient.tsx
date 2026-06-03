@@ -221,78 +221,75 @@ export default function DashboardClient() {
         <section className="space-y-6 animate-fade-up">
           <div>
             <h2 className="font-serif text-3xl font-semibold text-slate-950 mb-2">Segunda vuelta presidencial</h2>
-            <p className="text-slate-600">Tres opciones, enfoque claro y cobertura premium.</p>
+            <p className="text-slate-600">Comparación directa entre Abelardo de la Espriella e Iván Cepeda.</p>
           </div>
 
-          <div className="hidden md:grid grid-cols-3 gap-6">
-            {loading
-              ? [...Array(3)].map((_, idx) => (
-                  <article key={idx} className="bar-card animate-pulse" aria-hidden>
-                    <div className="bar-card-header">
-                      <div className="h-10 w-24 rounded-full bg-slate-200" />
-                      <div className="h-4 w-20 rounded-full bg-slate-200 mt-4" />
-                    </div>
-                    <div className="bar-track">
-                      <div className="bar-fill vertical" />
-                    </div>
-                    <div className="bar-card-footer">
-                      <div className="h-14 w-full rounded-2xl bg-slate-200" />
-                      <div className="h-4 w-32 rounded-full bg-slate-200 mt-4" />
-                    </div>
-                  </article>
-                ))
-              : [abelardo, ivan, votoBlanco].filter(Boolean).map((candidate) => {
-                  const isLeader = candidate?.nombre === leader?.nombre;
-                  return (
-                    <article key={candidate?.id} className={`bar-card ${isLeader ? "bar-card-leader" : ""}`}>
-                      <div className="bar-card-header">
-                        <p className="text-4xl font-semibold text-slate-950">{candidate?.porcentaje}%</p>
-                      </div>
-                      <div className="bar-track">
-                        <div
-                          className="bar-fill vertical"
-                          style={{
-                            background: candidate?.color,
-                            height: `${Math.max(12, Math.min(100, candidate?.porcentaje ?? 0))}%`,
-                          }}
-                        >
-                          <span className="bar-fill-text">{candidate?.votos}</span>
-                        </div>
-                      </div>
-                      <div className="bar-card-footer">
-                        <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="bar-photo" />
-                        <div>
-                          <p className="text-lg font-semibold text-slate-950">{candidate?.nombre}</p>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-          </div>
-
-          <div className="md:hidden grid grid-cols-2 gap-4">
+          <div className="comparison-grid hidden md:grid gap-6">
             {[abelardo, ivan].filter(Boolean).map((candidate) => {
               const isLeader = candidate?.nombre === leader?.nombre;
               return (
-                <article key={candidate?.id} className={`mobile-card ${isLeader ? "mobile-card-leader" : ""}`}>
-                  <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="mobile-card-photo" />
-                  <div className="mobile-card-content">
-                    <p className="text-sm uppercase tracking-[0.3em] text-slate-500">{candidate?.nombre}</p>
-                    <p className="mt-3 text-3xl font-semibold text-slate-950">{candidate?.porcentaje}%</p>
-                    <p className="mt-2 text-sm text-slate-600">{candidate?.votos} votos</p>
+                <article key={candidate?.id} className={`comparison-card ${isLeader ? "comparison-card-leader" : ""}`}>
+                  <div className="comparison-card-top">
+                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate?.nombre}</p>
+                    <p className="comparison-percentage">{candidate?.porcentaje}%</p>
+                  </div>
+                  <div className="comparison-media">
+                    <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="comparison-photo" />
+                    <div className="comparison-metrics">
+                      <p className="comparison-votes-label">Votos</p>
+                      <p className="comparison-votes-value">{candidate?.votos}</p>
+                    </div>
+                  </div>
+                  <div className="comparison-footer">
+                    <p className="text-sm text-slate-500">{isLeader ? "Líder actual" : "Contendiente"}</p>
                   </div>
                 </article>
               );
             })}
           </div>
 
-          <div className="md:hidden">
-            <article className="mobile-card mobile-card-blank">
-              <div className="mobile-card-blank-head">
-                <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Voto en Blanco</p>
-                <p className="mt-3 text-3xl font-semibold text-slate-950">{votoBlanco?.porcentaje ?? 0}%</p>
+          <div className="md:hidden grid gap-4">
+            {[abelardo, ivan].filter(Boolean).map((candidate) => {
+              const isLeader = candidate?.nombre === leader?.nombre;
+              return (
+                <article key={candidate?.id} className={`comparison-card mobile ${isLeader ? "comparison-card-leader" : ""}`}>
+                  <div className="comparison-card-top">
+                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{candidate?.nombre}</p>
+                    <p className="comparison-percentage">{candidate?.porcentaje}%</p>
+                  </div>
+                  <div className="comparison-media">
+                    <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="comparison-photo" />
+                    <div className="comparison-metrics">
+                      <p className="comparison-votes-label">Votos</p>
+                      <p className="comparison-votes-value">{candidate?.votos}</p>
+                    </div>
+                  </div>
+                  <div className="comparison-footer">
+                    <p className="text-sm text-slate-500">{isLeader ? "Líder actual" : "Contendiente"}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="comparison-footer-grid">
+            <div className="difference-panel">
+              <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Diferencia inmediata</p>
+              <div className="difference-values">
+                <div>
+                  <p className="text-3xl font-semibold text-slate-950">{voteDifference.toLocaleString("es-CO")}</p>
+                  <p className="text-sm text-slate-500">votos</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-semibold text-slate-950">{percentDifference.toFixed(1)} pts</p>
+                  <p className="text-sm text-slate-500">porcentuales</p>
+                </div>
               </div>
-              <p className="mt-3 text-sm text-slate-600">{votoBlanco?.votos ?? "0"} votos</p>
+            </div>
+            <article className="blank-block">
+              <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Voto en Blanco</p>
+              <p className="mt-3 text-4xl font-semibold text-slate-950">{votoBlanco?.porcentaje ?? 0}%</p>
+              <p className="mt-2 text-sm text-slate-600">{votoBlanco?.votos ?? "0"} votos</p>
             </article>
           </div>
         </section>
