@@ -247,7 +247,6 @@ export default function DashboardClient() {
                     <article key={candidate?.id} className={`bar-card ${isLeader ? "bar-card-leader" : ""}`}>
                       <div className="bar-card-header">
                         <p className="text-4xl font-semibold text-slate-950">{candidate?.porcentaje}%</p>
-                        <p className="mt-2 text-sm uppercase tracking-[0.26em] text-slate-500">{candidate?.votos} votos</p>
                       </div>
                       <div className="bar-track">
                         <div
@@ -256,7 +255,9 @@ export default function DashboardClient() {
                             background: candidate?.color,
                             height: `${Math.max(12, Math.min(100, candidate?.porcentaje ?? 0))}%`,
                           }}
-                        />
+                        >
+                          <span className="bar-fill-text">{candidate?.votos}</span>
+                        </div>
                       </div>
                       <div className="bar-card-footer">
                         <img src={`/avatars/${resolveAvatarFile(candidate?.foto ?? "", candidate?.nombre ?? "")}`} alt={candidate?.nombre} className="bar-photo" />
