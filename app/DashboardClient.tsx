@@ -231,6 +231,11 @@ export default function DashboardClient() {
   const percentDifference = Math.abs((abelardo?.porcentaje ?? 0) - (ivan?.porcentaje ?? 0));
   const contenders = [abelardo, ivan].filter((c): c is Candidate => Boolean(c));
 
+  const getLeaderPercentage = (candidate: Candidate) => {
+    const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
+    return Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+  };
+
   return (
     <main className="relative min-h-screen bg-gradient-to-b from-[#fafaf8] to-[#f5f3f0] px-4 py-8 sm:px-6 sm:py-12">
       <div className="relative mx-auto max-w-7xl space-y-10">
@@ -272,12 +277,22 @@ export default function DashboardClient() {
           <div className="comparison-grid hidden md:grid gap-6">
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
-              const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
-              const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
-              const showInsideBar = scaledHeight >= 25;
+              const fillHeight = getLeaderPercentage(candidate);
               const baseColor = candidate.color;
+              const lightColor = `${baseColor}20`;
+              const darkColor = `${baseColor}ee`;
+              
               return (
-                <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
+                <article
+                  key={candidate.id}
+                  className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}
+                  data-fill-active={barActive ? "true" : "false"}
+                  style={{
+                    "--fill-height": `${fillHeight}%`,
+                    "--fill-gradient-light": baseColor,
+                    "--fill-gradient-dark": darkColor,
+                  } as CSSProperties}
+                >
                   <div className="comparison-card-top">
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
                     <p className="comparison-name">{candidate.nombre}</p>
@@ -286,18 +301,7 @@ export default function DashboardClient() {
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                     <div className="comparison-body">
                       <div className="comparison-chart">
-                        <div className="comparison-bar-vertical">
-                          <div
-                            className="comparison-bar-fill-vertical"
-                            style={{
-                              height: barActive ? `${scaledHeight}%` : "0%",
-                              background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}ee 100%)`,
-                            }}
-                          >
-                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
-                          </div>
-                        </div>
-                        {!showInsideBar ? <p className="comparison-votes-above">{votesValue} votos</p> : null}
+                        <p className="comparison-votes-above">{votesValue}</p>
                       </div>
                     </div>
                   </div>
@@ -309,12 +313,21 @@ export default function DashboardClient() {
           <div className="md:hidden grid grid-cols-2 gap-4">
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
-              const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
-              const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
-              const showInsideBar = scaledHeight >= 25;
+              const fillHeight = getLeaderPercentage(candidate);
               const baseColor = candidate.color;
+              const darkColor = `${baseColor}ee`;
+              
               return (
-                <article key={candidate.id} className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
+                <article
+                  key={candidate.id}
+                  className={`comparison-card mobile ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}
+                  data-fill-active={barActive ? "true" : "false"}
+                  style={{
+                    "--fill-height": `${fillHeight}%`,
+                    "--fill-gradient-light": baseColor,
+                    "--fill-gradient-dark": darkColor,
+                  } as CSSProperties}
+                >
                   <div className="comparison-card-top">
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
                     <p className="comparison-name">{candidate.nombre}</p>
@@ -323,18 +336,7 @@ export default function DashboardClient() {
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                     <div className="comparison-body">
                       <div className="comparison-chart">
-                        <div className="comparison-bar-vertical">
-                          <div
-                            className="comparison-bar-fill-vertical"
-                            style={{
-                              height: barActive ? `${scaledHeight}%` : "0%",
-                              background: `linear-gradient(180deg, ${baseColor} 0%, ${baseColor}ee 100%)`,
-                            }}
-                          >
-                            {showInsideBar ? <span className="comparison-bar-text-vertical">{votesValue}</span> : null}
-                          </div>
-                        </div>
-                        {!showInsideBar ? <p className="comparison-votes-above">{votesValue} votos</p> : null}
+                        <p className="comparison-votes-above">{votesValue}</p>
                       </div>
                     </div>
                   </div>
