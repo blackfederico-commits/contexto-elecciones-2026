@@ -804,6 +804,15 @@ h6 {
   gap: 1.2rem;
   margin-top: 1rem;
 }
+@media (max-width: 768px) {
+  .comparison-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .difference-panel {
+    display: none;
+  }
+}
 
 .difference-panel {
   padding: 1.25rem;
