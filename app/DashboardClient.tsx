@@ -398,7 +398,7 @@ export default function DashboardClient() {
   </div>
 </div>
             </div>
-            <article className="blank-block">
+            <article className="blank-block text-center">
               <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Voto en Blanco</p>
 <p className="mt-3 text-4xl font-semibold text-slate-950">
   {votoBlanco?.votos ?? "0"}
