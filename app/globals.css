@@ -533,8 +533,8 @@ h6 {
 }
 
 .comparison-photo {
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 220px;
   border-radius: 32px;
   object-fit: cover;
   border: 3px solid rgba(15, 23, 42, 0.12);
@@ -564,7 +564,7 @@ h6 {
 
 .comparison-bar-vertical {
   width: 100%;
-  height: 320px;
+  height: 380px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
