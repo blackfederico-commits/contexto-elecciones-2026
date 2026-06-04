@@ -672,48 +672,32 @@ h6 {
 }
 
 /* Premium votes display module */
+/* Ocultamos este módulo porque está generando elementos
+   flotantes detrás de las tarjetas en móvil */
+
 .comparison-votes-above {
-  position: absolute;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.12rem;
-  padding: 0;
-  margin: 0;
-  z-index: 12;
+  display: none !important;
 }
 
 .comparison-votes-above-number {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: #111827;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  display: none !important;
 }
 
 .comparison-votes-above-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #6b7280;
-  font-weight: 600;
+  display: none !important;
 }
 
+/* Corrección del bloque móvil */
 @media (max-width: 768px) {
- .comparison-chart {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  text-align: center;
-}{
+  .comparison-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
     min-height: 200px;
+    position: relative;
+    text-align: center;
   }
 }
 
