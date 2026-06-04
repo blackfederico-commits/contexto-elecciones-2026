@@ -1031,3 +1031,21 @@ h6 {
     transform: translateY(0);
   }
 }
+@media (max-width: 768px) {
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-card p:first-child {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.2 !important;
+    word-break: normal !important;
+  }
+
+  .mobile-summary-metrics .stat-card {
+    min-height: 140px;
+  }
+
+}
