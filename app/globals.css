@@ -1084,6 +1084,7 @@ h6 {
   }
 }
 @media (max-width: 768px) {
+
   .comparison-grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
@@ -1091,6 +1092,10 @@ h6 {
   }
 
   .inbar-votes {
+    display: none !important;
+  }
+
+  .comparison-bar-vertical {
     display: none !important;
   }
 }
