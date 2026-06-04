@@ -591,6 +591,7 @@ h6 {
   flex-direction: column;
   justify-content: flex-end;
   min-height: 0;
+  padding-bottom: 16px;
 }
 
 .comparison-chart {
