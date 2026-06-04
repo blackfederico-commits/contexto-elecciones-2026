@@ -327,7 +327,7 @@ export default function DashboardClient() {
             })}
           </div>
 
-          <div className="md:hidden grid grid-cols-2 gap-4">
+          <div style={{ display: "none" }}>
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
