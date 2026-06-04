@@ -340,6 +340,9 @@ export default function DashboardClient() {
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
                     <p className="comparison-name">{candidate.nombre}</p>
                   </div>
+                  <p className="comparison-mobile-votes">
+  {votesValue} votos
+</p>
                   <div className="comparison-profile-row">
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
                     <div className="comparison-body">
