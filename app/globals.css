@@ -1144,3 +1144,10 @@ h6 {
   letter-spacing: 0.12em;
   color: #64748b;
 }
+.comparison-mobile-votes {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #475569;
+}
