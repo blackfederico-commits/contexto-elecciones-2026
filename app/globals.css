@@ -1049,3 +1049,8 @@ h6 {
   }
 
 }
+@media (max-width: 768px) {
+  .comparison-votes-above {
+    display: none !important;
+  }
+}
