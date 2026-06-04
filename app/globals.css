@@ -855,6 +855,11 @@ h6 {
 
 .blank-block {
   padding: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .blank-block p {
