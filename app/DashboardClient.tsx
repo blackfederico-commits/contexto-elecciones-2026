@@ -393,8 +393,13 @@ export default function DashboardClient() {
             </div>
             <article className="blank-block">
               <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Voto en Blanco</p>
-              <p className="mt-3 text-4xl font-semibold text-slate-950">{votoBlanco?.porcentaje ?? 0}%</p>
-              <p className="mt-2 text-sm text-slate-600">{votoBlanco?.votos ?? "0"} votos</p>
+<p className="mt-3 text-4xl font-semibold text-slate-950">
+  {votoBlanco?.votos ?? "0"}
+</p>
+
+<p className="mt-2 text-sm text-slate-600">
+  {votoBlanco?.porcentaje ?? 0}% del total
+</p>
             </article>
           </div>
         </section>
