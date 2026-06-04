@@ -341,7 +341,7 @@ export default function DashboardClient() {
                     <p className="comparison-name">{candidate.nombre}</p>
                   </div>
                   <p className="comparison-mobile-votes">
-  {votesValue} votos
+  PRUEBA FEDERICO 12345
 </p>
                   <div className="comparison-profile-row">
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
