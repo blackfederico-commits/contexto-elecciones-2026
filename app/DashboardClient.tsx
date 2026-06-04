@@ -289,6 +289,9 @@ export default function DashboardClient() {
                   <div className="comparison-card-top">
                     <p className="comparison-percentage">{candidate.porcentaje}%</p>
                     <p className="comparison-name">{candidate.nombre}</p>
+                    <p className="comparison-mobile-votes">
+  PRUEBA VOTOS
+</p>
                   </div>
                   <div className="comparison-profile-row">
                     <img src={`/avatars/${resolveAvatarFile(candidate.foto, candidate.nombre)}`} alt={candidate.nombre} className="comparison-photo" />
@@ -327,7 +330,7 @@ export default function DashboardClient() {
             })}
           </div>
 
-          <div style={{ display: "none" }}>
+          <div style={{ display: "block" }}>
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
