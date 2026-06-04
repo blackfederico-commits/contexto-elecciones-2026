@@ -1090,3 +1090,34 @@ h6 {
   }
 
 }
+.difference-values {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.difference-card {
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(15,23,42,0.06);
+  border-radius: 18px;
+  padding: 1.25rem;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.difference-number {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+  margin: 0;
+}
+
+.difference-label {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+}
