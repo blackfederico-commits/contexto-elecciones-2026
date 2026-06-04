@@ -381,15 +381,22 @@ export default function DashboardClient() {
             <div className="difference-panel">
               <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Diferencia inmediata</p>
               <div className="difference-values">
-                <div>
-                  <p className="text-3xl font-semibold text-slate-950">{voteDifference.toLocaleString("es-CO")}</p>
-                  <p className="text-sm text-slate-500">votos</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-semibold text-slate-950">{percentDifference.toFixed(1)} pts</p>
-                  <p className="text-sm text-slate-500">porcentuales</p>
-                </div>
-              </div>
+  <div className="difference-card">
+    <p className="difference-number">
+      {voteDifference.toLocaleString("es-CO")}
+    </p>
+    <p className="difference-label">votos</p>
+  </div>
+
+  <div className="difference-card">
+    <p className="difference-number">
+      {percentDifference.toFixed(1)}
+    </p>
+    <p className="difference-label">
+      puntos porcentuales
+    </p>
+  </div>
+</div>
             </div>
             <article className="blank-block">
               <p className="text-xs uppercase tracking-[0.32em] text-slate-500">Voto en Blanco</p>
