@@ -278,7 +278,10 @@ export default function DashboardClient() {
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
-              const scaledHeight = Math.min(100, (candidate.porcentaje / leaderPercent) * 100);
+              const scaledHeight = Math.min(
+  100,
+  10 + (candidate.porcentaje * 1.8)
+);;
               const showInsideBar = scaledHeight >= 25;
               const baseColor = candidate.color;
               return (
