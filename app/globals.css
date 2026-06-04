@@ -485,8 +485,10 @@ h6 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 340px;
-  max-height: 380px;
+
+  min-height: 540px;
+  max-height: 540px;
+
   position: relative;
   overflow: visible;
 }
@@ -531,8 +533,8 @@ h6 {
 }
 
 .comparison-photo {
-  width: 220px;
-  height: 220px;
+  width: 160px;
+  height: 160px;
   border-radius: 32px;
   object-fit: cover;
   border: 3px solid rgba(15, 23, 42, 0.12);
@@ -551,51 +553,53 @@ h6 {
   min-height: 0;
 }
 
-.
-
-.comparison-bar-vertical {
+.comparison-chart {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.04) 0%, rgba(15, 23, 42, 0.06) 100%);
-  border-radius: 12px;
-  position: relative;
+  min-height: 280px;
+}
+
+.comparison-bar-vertical {
+  width: 100%;
+  height: 420px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(15,23,42,0.03) 0%,
+    rgba(15,23,42,0.08) 100%
+  );
+  border-radius: 16px;
+  padding: 0.5rem;
   overflow: hidden;
-  padding: 0.6rem;
 }
 
 .comparison-bar-fill-vertical {
   width: 100%;
   height: 0%;
-  background: linear-gradient(180deg, var(--fill-color-light, #cc0100) 0%, var(--fill-color-dark, #a50000) 100%);
-  border-radius: 10px 10px 6px 6px;
-  animation: barGrow 1.35s ease-out forwards;
+  border-radius: 14px 14px 8px 8px;
+  background: linear-gradient(
+    180deg,
+    var(--fill-color-light),
+    var(--fill-color-dark)
+  );
+
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 0.85rem;
-  box-shadow: 
-    inset 0 14px 36px rgba(0, 0, 0, 0.22),
-    inset 0 2px 4px rgba(255,255,255,0.12),
-    0 28px 60px rgba(10, 10, 12, 0.08);
-  position: relative;
-  overflow: visible;
+  justify-content: center;
+
+  animation: barGrow 1.2s ease-out forwards;
+
+  box-shadow:
+    inset 0 10px 24px rgba(255,255,255,0.18),
+    inset 0 -10px 24px rgba(0,0,0,0.18),
+    0 12px 32px rgba(0,0,0,0.15);
 }
 
-.comparison-bar-fill-vertical::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  pointer-events: none;
-}
 
 @keyframes barGrow {
   from { height: 0%; transform: translateY(6px); opacity: 0.85; }
@@ -619,25 +623,30 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding-bottom: 0.6rem;
+  justify-content: center;
+
   width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  text-align: center;
 }
 
 .inbar-votes-number {
-  font-size: 1.45rem;
+  font-size: 2rem;
   font-weight: 900;
-  color: white;
-  text-shadow: 0 6px 22px rgba(2,6,23,0.45);
+  color: #fff;
   line-height: 1;
+  margin: 0;
 }
 
 .inbar-votes-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
+  margin-top: 4px;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.95);
 }
 
 .votes-above-text {
