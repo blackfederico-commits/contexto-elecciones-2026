@@ -287,10 +287,16 @@ export default function DashboardClient() {
               return (
                 <article key={candidate.id} className={`comparison-card ${candidate.nombre === leader?.nombre ? "comparison-card-leader" : ""}`}>
                   <div className="comparison-card-top">
-                    <p className="comparison-percentage">{candidate.porcentaje}%</p>
-                    <p className="comparison-name">{candidate.nombre}</p>
-                    <p className="comparison-mobile-votes">
-  PRUEBA VOTOS
+                   <p className="comparison-name">
+  {candidate.nombre}
+</p>
+
+<p className="comparison-percentage">
+  {candidate.porcentaje}%
+</p>
+
+<p className="comparison-mobile-votes">
+  {votesValue} votos
 </p>
                   </div>
                   <div className="comparison-profile-row">
