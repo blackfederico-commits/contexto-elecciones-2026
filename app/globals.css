@@ -1038,3 +1038,15 @@ h6 {
     display: none !important;
   }
 }
+@media (max-width: 768px) {
+
+  .comparison-percentage {
+    font-size: 2.2rem !important;
+  }
+
+  .comparison-name {
+    font-size: 0.9rem !important;
+    line-height: 1.05;
+  }
+
+}
