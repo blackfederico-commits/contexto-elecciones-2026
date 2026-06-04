@@ -594,10 +594,12 @@ h6 {
 
 .comparison-chart {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   width: 100%;
+  height: 220px;
   min-height: 220px;
+  overflow: hidden;
 }
 
 .comparison-bar-vertical {
