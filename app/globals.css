@@ -1085,9 +1085,14 @@ h6 {
 }
 @media (max-width: 768px) {
   .comparison-grid {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 1rem;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  .inbar-votes {
+    display: none !important;
+  }
 }
 
 .comparison-card {
