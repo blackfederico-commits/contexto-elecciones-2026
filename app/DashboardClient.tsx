@@ -279,7 +279,7 @@ export default function DashboardClient() {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
               const scaledHeight = Math.min(
-  100,
+  85,
   10 + (candidate.porcentaje * 1.8)
 );;
               const showInsideBar = scaledHeight >= 25;

@@ -603,7 +603,7 @@ h6 {
 }
 
 .comparison-bar-vertical {
-  width: 100%;
+  width: 88%;
   height: 220px;
   display: flex;
   align-items: flex-end;
@@ -619,7 +619,7 @@ h6 {
 }
 
 .comparison-bar-fill-vertical {
-  width: 100%;
+  width: 85%;
   height: 0%;
   border-radius: 14px 14px 8px 8px;
   background: linear-gradient(
