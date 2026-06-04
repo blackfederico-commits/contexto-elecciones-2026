@@ -1145,9 +1145,10 @@ h6 {
   color: #64748b;
 }
 .comparison-mobile-votes {
-  margin-top: 0.75rem;
-  text-align: center;
+  display: block;
   font-size: 1rem;
-  font-weight: 700;
-  color: #475569;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0.25rem 0 0.75rem 0;
+  text-align: center;
 }
