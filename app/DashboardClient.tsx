@@ -336,7 +336,7 @@ export default function DashboardClient() {
             })}
           </div>
 
-          <div style={{ display: "block" }}>
+          <div style={{ display: "none" }} aria-hidden="true">
             {contenders.map((candidate) => {
               const votesValue = formatNumber(animatedVotes[candidate.id] ?? 0);
               const leaderPercent = leader?.porcentaje ?? candidate.porcentaje ?? 100;
