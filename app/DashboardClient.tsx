@@ -320,13 +320,7 @@ export default function DashboardClient() {
                             ) : null}
                           </div>
                         </div>
-                        {!showInsideBar ? (
-                          <div className="comparison-votes-above">
-                            <div className="votes-above-text">
-                              <div className="votes-above-number">{votesValue}</div>
-                              <div className="votes-above-label">VOTOS</div>
-                            </div>
-                          </div>
+                        
                         ) : null}
                       </div>
                     </div>
